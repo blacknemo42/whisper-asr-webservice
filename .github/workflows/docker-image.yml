@@ -11,7 +11,30 @@ name: Publish Docker image
 
 on:
   release:
-    types: [published, workflow_dispatch]
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+        type: choice
+        options:
+        - info
+        - warning
+        - debug
+      tags:
+        description: 'Test tags'
+        required: false
+        type: boolean
+      environment:
+        description: 'Environment'
+        type: environment
+        required: true
+        
+env:
+  REGISTRY: docker.io
+  IMAGE_NAME: blacknemo/whisperx-asr-webservice
 
 jobs:
   push_to_registry:
@@ -51,6 +74,6 @@ jobs:
       - name: Generate artifact attestation
         uses: actions/attest-build-provenance@v2
         with:
-          subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
+          subject-name: docker.io/blacknemo/whisperx-asr-webservice
           subject-digest: ${{ steps.push.outputs.digest }}
           push-to-registry: true
