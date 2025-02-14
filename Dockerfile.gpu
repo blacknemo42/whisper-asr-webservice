@@ -78,6 +78,8 @@ COPY --from=swagger-ui /usr/share/nginx/html/swagger-ui-bundle.js swagger-ui-ass
 RUN poetry config virtualenvs.in-project true
 RUN poetry install
 
+ARG TORCH_CUDA_ARCH_LIST="5.2"
+
 RUN $POETRY_VENV/bin/pip install torch==1.13.1+cu117 -f https://download.pytorch.org/whl/torch
 
 # WORKAROUND due to Poetry limitation with git-based dependencies
