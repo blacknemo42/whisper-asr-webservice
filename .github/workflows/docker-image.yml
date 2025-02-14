@@ -30,7 +30,7 @@ on:
       environment:
         description: 'Environment'
         type: environment
-        required: true
+        required: false
         
 env:
   REGISTRY: docker.io
